@@ -12,7 +12,7 @@ import static com.codeborne.selenide.Selenide.open;
 public class AutomationPracticeFormTests {
 
     @BeforeAll
-    static void setUP() {
+    static void setUp() {
         Configuration.holdBrowserOpen = true;
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.browserSize = "1920x1080";
@@ -31,27 +31,29 @@ public class AutomationPracticeFormTests {
         $("#firstName").setValue(name);
         $("#lastName").setValue(fname);
         $("#userEmail").setValue(email);
-        $(byText("Male")).click();
+        $("#genterWrapper").$(byText("Male")).click();
+//        $(byText("Male")).click();
 //        $("#gender-radio-1").selectRadio("Male");
         $("#userNumber").setValue(mobile);
         $("#dateOfBirthInput").click();
-            $(".react-datepicker__month-select").selectOption("May");
-            $(".react-datepicker__year-select").selectOption("1982");
-            $(byText("2")).click();
+        $(".react-datepicker__month-select").selectOption("May");
+        $(".react-datepicker__year-select").selectOption("1982");
+        $(byText("2")).click();
         $("#subjectsInput").setValue("Co").pressEnter();
-        $(byText("Sports")).click();
+        $("#hobbiesWrapper").$(byText("Sports")).click();
+//        $(byText("Sports")).click();
         $("#uploadPicture").uploadFromClasspath("mypic1.jpg");
         $("#currentAddress").setValue(address);
         $("#state").click();
-            $(byText("NCR")).click();
+        $(byText("NCR")).click();
         $("#city").click();
-            $(byText("Delhi")).click();
+        $(byText("Delhi")).click();
         $("#submit").click();
 
         $(".table-responsive").shouldHave(text("Student Name " + name + " " + fname),
-                text("Mobile "+mobile), text("Picture mypic1.jpg"), text("Student Email "+ email),
+                text("Mobile " + mobile), text("Picture mypic1.jpg"), text("Student Email " + email),
                 text("Gender Male"), text("Date of Birth 02 May,1982"), text("Subjects Computer Science"),
-                text("Hobbies Sports"), text("Address "+address), text("State and City NCR Delhi"));
+                text("Hobbies Sports"), text("Address " + address), text("State and City NCR Delhi"));
 
 
     }
