@@ -4,6 +4,7 @@ import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
@@ -20,13 +21,39 @@ public class AutomationPracticeFormTests {
     @Test
     void fillFormTest() {
 
-        open("/automation-practice-form");
-        $("#firstName").setValue("Pavel");
-        $("#lastName").setValue("Pilatov");
-        $("#userEmail").setValue("pilatov@gmail.com");
-//        $("#gender-radio-1").selectRadio("Male");
+        String name = "Pavel";
+        String fname = "Pilatov";
+        String email = fname.toLowerCase() + "@gmail.com";
+        String mobile = "9265001234";
+        String address = "Russia, Khimki";
 
+        open("/automation-practice-form");
+        $("#firstName").setValue(name);
+        $("#lastName").setValue(fname);
+        $("#userEmail").setValue(email);
         $(byText("Male")).click();
+//        $("#gender-radio-1").selectRadio("Male");
+        $("#userNumber").setValue(mobile);
+        $("#dateOfBirthInput").click();
+            $(".react-datepicker__month-select").selectOption("May");
+            $(".react-datepicker__year-select").selectOption("1982");
+            $(byText("2")).click();
+        $("#subjectsInput").setValue("Co").pressEnter();
+        $(byText("Sports")).click();
+        $("#uploadPicture").uploadFromClasspath("mypic1.jpg");
+        $("#currentAddress").setValue(address);
+        $("#state").click();
+            $(byText("NCR")).click();
+        $("#city").click();
+            $(byText("Delhi")).click();
+        $("#submit").click();
+
+        $(".table-responsive").shouldHave(text("Student Name " + name + " " + fname),
+                text("Mobile "+mobile), text("Picture mypic1.jpg"), text("Student Email "+ email),
+                text("Gender Male"), text("Date of Birth 02 May,1982"), text("Subjects Computer Science"),
+                text("Hobbies Sports"), text("Address "+address), text("State and City NCR Delhi"));
+
+
     }
 
 }
